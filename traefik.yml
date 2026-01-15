@@ -1,0 +1,19 @@
+http:
+  middlewares:
+    rate-limit:
+      rateLimit:
+        average: 10
+        burst: 20
+
+  routers:
+    web-router:
+      rule: "Host(`example.local`)"
+      service: web-service
+      middlewares:
+        - rate-limit
+
+  services:
+    web-service:
+      loadBalancer:
+        servers:
+          - url: "http://localhost:8080"
